@@ -8,6 +8,9 @@ void Queue_Clear(QUEUE_HandleTypeDef * hqueue);
 unsigned int Queue_Count(QUEUE_HandleTypeDef * hqueue);
 QUEUE_StatusTypeDef Queue_Push(QUEUE_HandleTypeDef * hqueue, unsigned char data);
 unsigned int Queue_Push_Array(QUEUE_HandleTypeDef * hqueue, unsigned char * pdatas, unsigned int len);
+QUEUE_StatusTypeDef Queue_Pop(QUEUE_HandleTypeDef * hqueue, unsigned char * pdata);
+unsigned int Queue_Pop_Array(QUEUE_HandleTypeDef * hqueue, unsigned char * pdatas, unsigned int len);
+
 
 //==============================================================================
 //  函数名称：
@@ -92,4 +95,49 @@ unsigned int Queue_Push_Array(QUEUE_HandleTypeDef * hqueue, unsigned char * pdat
     }
     return i;
 }
+
+
+//==============================================================================
+//  函数名称：Queue_Pop
+//  函数功能：从队列中弹出数据
+//  函数参数：
+//  函数返回：
+//==============================================================================
+QUEUE_StatusTypeDef Queue_Pop(QUEUE_HandleTypeDef * hqueue, unsigned char * pdata)
+{
+    if(hqueue->head == hqueue->tail)
+    {
+        return QUEUE_VOID;
+    }
+    else
+    {
+        *pdata = hqueue->buffer[hqueue->head];
+        hqueue->head = (hqueue->head + 1) % hqueue->buffer_length;
+        return QUEUE_OK;
+    }
+}
+
+//==============================================================================
+//  函数名称：Queue_Pop_Array
+//  函数功能：从队列中弹出一组数据
+//  函数参数：
+//  函数返回：实际弹出数据的数量
+//==============================================================================
+unsigned int Queue_Pop_Array(QUEUE_HandleTypeDef * hqueue, unsigned char * pdatas, unsigned int len)
+{
+    unsigned int i;
+    for(i=0; i<len; i++)
+    {
+        if(Queue_Pop(hqueue, &pdatas[i]) == QUEUE_VOID)
+        {
+            break;
+        }
+    }
+    return i;
+}
+
+
+
+
+
 

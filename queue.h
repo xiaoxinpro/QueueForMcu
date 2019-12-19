@@ -35,6 +35,10 @@ extern void Queue_Clear(QUEUE_HandleTypeDef * hqueue);
 extern unsigned int Queue_Count(QUEUE_HandleTypeDef * hqueue);
 extern QUEUE_StatusTypeDef Queue_Push(QUEUE_HandleTypeDef * hqueue, unsigned char data);
 extern unsigned int Queue_Push_Array(QUEUE_HandleTypeDef * hqueue, unsigned char * pdatas, unsigned int len);
+extern QUEUE_StatusTypeDef Queue_Pop(QUEUE_HandleTypeDef * hqueue, unsigned char * pdata);
+extern unsigned int Queue_Pop_Array(QUEUE_HandleTypeDef * hqueue, unsigned char * pdatas, unsigned int len);extern 
+
+
 
 #endif
 
