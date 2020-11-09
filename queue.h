@@ -4,7 +4,7 @@
 //==============================================================================
 //  常量定义
 //==============================================================================
-
+#define QUEUE_DATA_T  unsigned char         //队列数据类型定义
 
 //==============================================================================
 //  类型定义
@@ -13,7 +13,7 @@ typedef struct QUEUE_HandleTypeDef{
     unsigned int head;                      //队列头指针
     unsigned int tail;                      //队列尾指针
     unsigned int buffer_length;             //队列缓存长度（初始化时赋值）
-    unsigned char * buffer;		              //队列缓存数组（初始化时赋值）
+    QUEUE_DATA_T * buffer;		              //队列缓存数组（初始化时赋值）
 }QUEUE_HandleTypeDef;
 
 typedef enum
@@ -30,15 +30,15 @@ typedef enum
 //==============================================================================
 //  公共函数声明
 //==============================================================================
-extern void Queue_Init(QUEUE_HandleTypeDef * hqueue, unsigned char * buffer, unsigned int len);
+extern void Queue_Init(QUEUE_HandleTypeDef * hqueue, QUEUE_DATA_T * buffer, unsigned int len);
 extern void Queue_Clear(QUEUE_HandleTypeDef * hqueue);
 extern unsigned int Queue_Count(QUEUE_HandleTypeDef * hqueue);
-extern QUEUE_StatusTypeDef Queue_Push(QUEUE_HandleTypeDef * hqueue, unsigned char data);
-extern unsigned int Queue_Push_Array(QUEUE_HandleTypeDef * hqueue, unsigned char * pdatas, unsigned int len);
-extern QUEUE_StatusTypeDef Queue_Pop(QUEUE_HandleTypeDef * hqueue, unsigned char * pdata);
-extern unsigned int Queue_Pop_Array(QUEUE_HandleTypeDef * hqueue, unsigned char * pdatas, unsigned int len);extern 
-
-
+extern QUEUE_StatusTypeDef Queue_Push(QUEUE_HandleTypeDef * hqueue, QUEUE_DATA_T data);
+extern unsigned int Queue_Push_Array(QUEUE_HandleTypeDef * hqueue, QUEUE_DATA_T * pdatas, unsigned int len);
+extern QUEUE_StatusTypeDef Queue_Pop(QUEUE_HandleTypeDef * hqueue, QUEUE_DATA_T * pdata);
+extern unsigned int Queue_Pop_Array(QUEUE_HandleTypeDef * hqueue, QUEUE_DATA_T * pdatas, unsigned int len); 
+extern QUEUE_StatusTypeDef Queue_Peek(QUEUE_HandleTypeDef * hqueue, QUEUE_DATA_T * pdata);
+extern unsigned int Queue_Peek_Array(QUEUE_HandleTypeDef * hqueue, QUEUE_DATA_T * pdatas, unsigned int len);
 
 #endif
 
