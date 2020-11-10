@@ -1,6 +1,8 @@
 # QueueForMcu
 基于单片机实现的队列功能模块，主要用于8位、16位、32位非运行RTOS的单片机应用，兼容大多数单片机平台。
 
+> 开源代码：https://github.com/xiaoxinpro/QueueForMcu
+
 ## 一、特性
 * 动态创建队列对象
 * 动态设置队列数据缓冲区
@@ -104,6 +106,103 @@ void Queue_Init(QUEUE_HandleTypeDef * hqueue, QUEUE_DATA_T * buffer, unsigned in
 ```
 Queue_Init(&qUartTx, BufferUartTx, Q_UART_BUFFER_SIZE);
 ```
+
+## 六、压入队列
+
+### 1、单数据压入
+将数据压入队列尾部使用 `Queue_Push` 函数，该函数原型如下：
+
+```
+QUEUE_StatusTypeDef Queue_Push(QUEUE_HandleTypeDef * hqueue, QUEUE_DATA_T data)
+```
+
+**参数说明：**
+
+| 参数名 | 描述 |
+|:--|:--|
+| hqueue | 需要压入数据的队列结构。 |
+| data| 待压入队列的数据。 |
+
+**返回值说明：**
+
+该函数会返回一个 `QUEUE_StatusTypeDef` 枚举数据类型，返回值会根据队列状态返回以下几个值：
+
+| 返回值 | 描述 |
+|:--|:--|
+| QUEUE_OK | 数据压入队列成功。 |
+| QUEUE_OVERLOAD | 未压入数据到队列中，原因队列已满。 |
+
+**参考代码：**
+
+```
+Queue_Push(&qUartTx, 'Q');
+Queue_Push(&qUartTx, 0x51);
+Queue_Push(&qUartTx, 81);
+```
+
+### 2、多数据压入
+若需要将多个数据（数组）压入队列可以使用 `Queue_Push_Array` 函数，原理上循环调用 `Queue_Push` 函数来实现的，函数原型如下：
+
+```
+unsigned int Queue_Push_Array(QUEUE_HandleTypeDef * hqueue, QUEUE_DATA_T * pdatas, unsigned int len)
+```
+
+**参数说明：**
+
+| 参数名 | 描述 |
+|:--|:--|
+| hqueue | 需要压入数据的队列结构。 |
+| pdatas | 待压入队列的数组首地址。 |
+| len | 待压入队列的数组长度。 |
+
+> 当数组长度大于队列剩余长度时，数组多余的数据将被忽略。
+
+**返回值说明：**
+
+* 该函数将返回实际被压入到队列中的数据长度。
+
+* 当队列中的剩余长度富余时，返回值将等于参数 `len` 的值。
+
+* 当队列中的剩余长度不足时，返回值为实际被压入到队列的数据长度。
+
+## 七、弹出队列
+### 1、单数据弹出
+将队列头部数据弹出队列使用 `Queue_Pop` 函数，需要注意的是，弹出的数据将从队列中删除，该函数原型如下：
+
+```
+QUEUE_StatusTypeDef Queue_Pop(QUEUE_HandleTypeDef * hqueue, QUEUE_DATA_T * pdata)
+```
+
+**参数说明：**
+
+| 参数名 | 描述 |
+|:--|:--|
+| hqueue | 需要弹出数据的队列结构。 |
+| pdata | 用于保存弹出数据变量的指针。 |
+
+**返回值说明：**
+
+该函数会返回一个 `QUEUE_StatusTypeDef` 枚举数据类型，返回值会根据队列状态返回以下几个值：
+
+| 返回值 | 描述 |
+|:--|:--|
+| QUEUE_OK | 数据弹出队列成功。 |
+| QUEUE_VOID| 未弹出数据到队列中，原因队列为空。 |
+
+**参考代码：**
+
+```
+QUEUE_DATA_T temp;
+if(QUEUE_OK = Queue_Pop(&qUartTx, &temp))
+{
+    // temp 为队列弹出的数据
+}
+else
+{
+    // 弹出数据失败
+}
+```
+
 
 ****
 待更新...
