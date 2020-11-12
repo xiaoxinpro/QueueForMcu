@@ -235,6 +235,13 @@ unsigned int Queue_Pop_Array(QUEUE_HandleTypeDef * hqueue, QUEUE_DATA_T * pdatas
 * `Queue_Pop` 得到队列中的数据后会删除队列中的数据。
 * `Queue_Peek` 得到队列中的数据后会保留队列中的数据。
 
+### 4、多数据复制
+当需要从队列头部获取多个数据，但又不希望数据从队列中删除时，可以使用 `Queue_Peek_Array` 函数来实现，该函数的参数与返回值与 `Queue_Pop_Array` 完全相同。
+
+使用 `Queue_Peek_Array` 和 `Queue_Pop_Array` 函数的区别在于：
+* `Queue_Pop_Array` 得到队列中的数据后会删除队列中的数据。
+* `Queue_Peek_Array` 得到队列中的数据后会保留队列中的数据。
+
 
 ****
 待更新...
