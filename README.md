@@ -242,7 +242,6 @@ unsigned int Queue_Pop_Array(QUEUE_HandleTypeDef * hqueue, QUEUE_DATA_T * pdatas
 * `Queue_Pop_Array` 得到队列中的数据后会删除队列中的数据。
 * `Queue_Peek_Array` 得到队列中的数据后会保留队列中的数据。
 
-
 ## 八、其他功能
 ### 1、清空队列
 当需要清空队列数据时，无需弹出所有数据，只需要调用 `Queue_Clear` 即可快速清空指定队列，在创建队列时会调用此函数来初始化队列，因此对于刚创建完成的队列无需调用清空队列函数。
@@ -259,5 +258,20 @@ void Queue_Clear(QUEUE_HandleTypeDef * hqueue)
 |:--|:--|
 | hqueue | 需要清空的队列结构。 |
 
-****
-待更新...
+### 2、获取队列数据数量
+当需要获取队列中的数据长度时，调用 `Queue_Count` 函数，函数原型如下：
+
+```
+unsigned int Queue_Count(QUEUE_HandleTypeDef * hqueue)
+```
+
+**参数说明：**
+
+| 参数名 | 描述 |
+|:--|:--|
+| hqueue | 需要获取数据长度的队列结构。 |
+
+**返回值说明：**
+
+* 该函数将返回队列中的数据长度。
+* 返回值范围在0到创建队列时的长度之间。
