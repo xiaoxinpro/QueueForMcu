@@ -275,3 +275,10 @@ unsigned int Queue_Count(QUEUE_HandleTypeDef * hqueue)
 
 * 该函数将返回队列中的数据长度。
 * 返回值范围在0到创建队列时的长度之间。
+
+
+## License
+
+Copyright © 2020 QueueForMcu Released under the GPL-3.0 License.
+
+
