@@ -179,14 +179,19 @@ QUEUE_StatusTypeDef Queue_Peek(QUEUE_HandleTypeDef * hqueue, QUEUE_DATA_T * pdat
 unsigned int Queue_Peek_Array(QUEUE_HandleTypeDef * hqueue, QUEUE_DATA_T * pdatas, unsigned int len)
 {
     unsigned int i;
+    if(hqueue->head == hqueue->tail)
+    {
+        return 0;
+    }
+    if(Queue_Count(hqueue) < len)
+    {
+        len = Queue_Count(hqueue);
+    }
     for(i=0; i<len; i++)
     {
-        if(Queue_Peek(hqueue, &pdatas[i]) == QUEUE_VOID)
-        {
-            break;
-        }
+        pdatas[i] = hqueue->buffer[(hqueue->head + i) % hqueue->buffer_length];
     }
-    return i;
+    return len;
 }
 
 
